@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الخدمات الطبية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b132b;
+            color: #ffffff;
+            margin: 0;
+            padding: 30px;
+        }
+        .header-card {
+            background: linear-gradient(135deg, #1c2541, #3a506b);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #48cae4;
+        }
+        .header-card h1 {
+            margin: 0;
+            color: #48cae4;
+            font-size: 28px;
+        }
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .service-card {
+            background-color: #1c2541;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-right: 5px solid #00b4d8;
+            transition: transform 0.2s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-title {
+            color: #48cae4;
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 1px solid #3a506b;
+            padding-bottom: 10px;
+        }
+        .service-desc {
+            color: #d8f3dc;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .service-info {
+            margin-top: 15px;
+            background: #0b132b;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .price-badge {
+            display: inline-block;
+            background-color: #00b4d8;
+            color: #0b132b;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-card">
+        <h1>الخدمات الطبية المتاحة</h1>
+    </div>
+
+    <div class="services-container">
+        {% for service in services %}
+            <div class="service-card">
+                <h2 class="service-title">{{ service.name }}</h2>
+                <p class="service-desc">{{ service.description }}</p>
+                <div class="service-info">
+                    <p><strong>الطبيب المختص:</strong> {{ service.doctor_name }}</p>
+                    <p><strong>أوقات العمل:</strong> {{ service.available_time }}</p>
+                </div>
+                <div class="price-badge">السعر: {{ service.price }} ريال</div>
+            </div>
+        {% empty %}
+            <p style="text-align: center;">لا توجد خدمات مضافة حالياً.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

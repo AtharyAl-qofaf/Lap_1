@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
+@login_required(login_url='login')
 def home(request):
     # 1. المتغيرات المحلية (Local Variables)
     hospital_name = "Care Medical"
@@ -59,6 +60,7 @@ def home(request):
         "description": description,
         "doctors": doctors_list,
         "main_doctor": main_doctor,
+        "status_text":"available",
     }
     return render(request, "doctors/home.html", context)
 

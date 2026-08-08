@@ -1,164 +1,74 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل الطبيب - Care Medical</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 600px;
-            overflow: hidden;
-            border: 1px solid #e1e8ed;
-        }
-        .card-header {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: #ffffff;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-        }
-        .avatar {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        .card-header h2 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .card-header p {
-            margin: 5px 0 0 0;
-            opacity: 0.9;
-            font-size: 15px;
-        }
-        .card-body {
-            padding: 30px;
-        }
-        .info-group {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px dashed #e9ecef;
-        }
-        .info-group:last-child {
-            border-bottom: none;
-        }
-        .label {
-            font-weight: bold;
-            color: #495057;
-        }
-        .value {
-            color: #1d2124;
-        }
-        .badge-available {
-            background-color: #28a745;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-        .badge-unavailable {
-            background-color: #dc3545;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-        .card-footer {
-            background-color: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid #e1e8ed;
-        }
-        .btn-back {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 24px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.3s;
-            display: inline-block;
-        }
-        .btn-back:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>التخصصات والدوام الطبي التفصيلي</title>
+    <link rel="stylesheet" href="{% static 'doctors/style.css' %}">
 </head>
 <body>
 
-    <div class="card">
-        {% if doctor %}
-            <div class="card-header">
-                <div class="avatar">👨‍⚕️</div>
-                <h2>{{ doctor.name }}</h2>
-                <p>{{ doctor.specialty }}</p>
-            </div>
+    <header>
+        <div class="logo">👨‍⚕️ <span>Care</span>Medical</div>
+        <nav>
+            <a href="{% url 'doctors:home' %}">الرئيسية</a>
+            <a href="{% url 'doctors:about' %}" class="active">التخصصات والمواعيد</a>
+        </nav>
+    </header>
 
-            <div class="card-body">
-                <div class="info-group">
-                    <span class="label">رقم التعريف (ID):</span>
-                    <span class="value">#{{ doctor.id }}</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">العمر:</span>
-                    <span class="value">{{ doctor.age }} سنة</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">سنوات الخبرة:</span>
-                    <span class="value">{{ doctor.experience_years }} سنوات</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">الدرجة العلمية:</span>
-                    <span class="value">{{ doctor.degree }}</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">أوقات الدوام:</span>
-                    <span class="value">🕒 {{ doctor.schedule }}</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">الموقع:</span>
-                    <span class="value">📍 {{ doctor.location }}</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">التقييم العام:</span>
-                    <span class="value" style="color: #ff9800; font-weight: bold;">★ {{ doctor.rating }}</span>
-                </div>
-                <div class="info-group">
-                    <span class="label">حالة الحجز:</span>
-                    <span class="value">
-                        {% if doctor.available %}
-                            <span class="badge-available">متاح حالياً للحجز</span>
-                        {% else %}
-                            <span class="badge-unavailable">غير متاح حالياً</span>
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
-        {% else %}
-            <div class="card-body" style="text-align: center; padding: 40px;">
-                <h3 style="color: #dc3545;">⚠️ لم يتم العثور على الطبيب المطلوب!</h3>
-                <p>رقم المعرف الممرر: {{ doctor_id }}</p>
-            </div>
-        {% endif %}
+    <div class="container">
+        <!-- مربع العنوان الملون -->
+        <div class="section-title-box">
+            <h2>📅 جدول <span>التخصصات والدوام الطبي</span> التفصيلي</h2>
+            <p style="margin-top: 8px; color: #e2e8f0;">استعرض ساعات العمل والمواقع المتاحة لخدمتكم بأعلى كفاءة</p>
+        </div>
 
-        <div class="card-footer">
-            <a href="{% url 'doctors:home' %}" class="btn-back">&rightarrow; العودة للعيادة الرئيسية</a>
+        <!-- الجدول المزخرف بالألوان -->
+        <div class="table-card">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>التخصص الطبي</th>
+                        <th>اسم التخصص بالعربي</th>
+                        <th>الطبيب الاستشاري المسؤول</th>
+                        <th>أيام وساعات الدوام</th>
+                        <th>موقع العيادة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b style="color: var(--accent-cyan);">CARDIOLOGY</b></td>
+                        <td>أمراض القلب والأوعية</td>
+                        <td>د. عصام القفاف</td>
+                        <td>السبت - الأربعاء (9:00 AM - 2:00 PM)</td>
+                        <td><span style="background: #1e3a8a; padding: 4px 10px; border-radius: 6px;">العيادة A-101</span></td>
+                    </tr>
+                    <tr>
+                        <td><b style="color: var(--accent-cyan);">NEUROLOGY</b></td>
+                        <td>جراحة المخ والأعصاب</td>
+                        <td>د. عذاري القفاف</td>
+                        <td>الأحد - الخميس (10:00 AM - 4:00 PM)</td>
+                        <td><span style="background: #065f46; padding: 4px 10px; border-radius: 6px;">العيادة B-205</span></td>
+                    </tr>
+                    <tr>
+                        <td><b style="color: var(--accent-cyan);">PEDIATRICS</b></td>
+                        <td>طب الأطفال وحديثي الولادة</td>
+                        <td>د. خالد العمراني</td>
+                        <td>طوال الأسبوع (8:00 AM - 8:00 PM)</td>
+                        <td><span style="background: #831843; padding: 4px 10px; border-radius: 6px;">العيادة C-102</span></td>
+                    </tr>
+                    <tr>
+                        <td><b style="color: var(--accent-cyan);">ORTHOPEDICS</b></td>
+                        <td>جراحة العظام والمفاصل</td>
+                        <td>د. محمد الشرفي</td>
+                        <td>السبت - الخميس (4:00 PM - 9:00 PM)</td>
+                        <td><span style="background: #78350f; padding: 4px 10px; border-radius: 6px;">العيادة D-301</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
+    <footer>حقوق النشر © 2026 - Care Medical</footer>
 </body>
 </html>

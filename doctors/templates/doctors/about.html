@@ -1,133 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التخصصات والأقسام - MedicalCare</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap');
-
-        :root {
-            --primary: #2563eb;
-            --navy-dark: #0f172a;
-            --bg: #f0f4f8;
-            --accent: #06b6d4;
-        }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg);
-            color: var(--navy-dark);
-            margin: 0;
-            padding: 0;
-            direction: rtl;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: white;
-            padding: 16px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo { font-size: 1.6rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 8px; }
-        .logo span { color: var(--accent); }
-
-        nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-right: 12px;
-            padding: 8px 18px;
-            border-radius: 10px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover, nav a.active {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
-
-        .container {
-            max-width: 1150px;
-            margin: 35px auto;
-            padding: 0 20px;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 24px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            margin-bottom: 35px;
-        }
-
-        .hero h1 { margin: 0 0 10px; font-size: 2.2rem; font-weight: 800; }
-        .hero p { opacity: 0.9; font-size: 1.1rem; }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 25px;
-            border-right: 5px solid var(--primary);
-            padding-right: 12px;
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-
-        .custom-table th, .custom-table td {
-            padding: 18px 22px;
-            text-align: right;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .custom-table th {
-            background-color: #f1f5f9;
-            color: var(--navy-dark);
-            font-weight: 800;
-        }
-
-        .badge {
-            background-color: #dcfce7;
-            color: #166534;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        .doc-name { font-weight: 700; color: var(--primary); }
-        .work-time { color: #475569; font-size: 0.9rem; font-weight: 600; }
-
-        footer {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #94a3b8;
-            padding: 40px 0 20px 0;
-            text-align: center;
-            margin-top: 60px;
-        }
-    </style>
+    <title>التخصصات والأقسام - {{ hospital_name|title }}</title>
+    <link rel="stylesheet" href="{% static 'doctors/style.css' %}">
 </head>
-<body>
+<body>111111
 
+    <!-- Loader Component -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <h3 style="color: white;">جاري تحميل جدول التخصصات...</h3>
+    </div>
+
+    <!-- Header / Navbar -->
     <header>
-        <div class="logo">👨‍⚕️ <span>Medical</span>Care</div>
+        <div class="logo">👨‍⚕️ <span>{{ hospital_name|upper }}</span></div>
         <nav>
             <a href="{% url 'doctors:home' %}">الرئيسية</a>
             <a href="{% url 'doctors:about' %}" class="active">التخصصات والأقسام</a>
@@ -135,63 +25,123 @@
     </header>
 
     <div class="container">
+        <!-- Hero Section -->
         <div class="hero">
             <h1>دليل التخصصات والدوام الطبي التفصيلي</h1>
-            <p>معلومات دقيقة عن الاستشاريين، ساعات العمل، ومواقع العيادات المتاحة</p>
+            <p>معلومات دقيقة عن الاستشاريين، ساعات العمل، والمواقع المتاحة لخدمتكم بأعلى كفاءة</p>
         </div>
 
         <h2 class="section-title">جدول التخصصات والأطباء المداومين</h2>
-        <table class="custom-table">
-            <thead>
-                <tr>
-                    <th>رمز التخصص</th>
-                    <th>اسم التخصص</th>
-                    <th>الطبيب الاستشاري Responsible</th>
-                    <th>أيام وساعات الدوام</th>
-                    <th>موقع العيادة</th>
-                    <th>الحالة</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>#CARDIO-01</td>
-                    <td>أمراض القلب والأوعية</td>
-                    <td><span class="doc-name">د. عصام القفاف</span></td>
-                    <td><span class="work-time">السبت - الأربعاء (9:00 AM - 2:00 PM)</span></td>
-                    <td>العيادة A-101</td>
-                    <td><span class="badge">متاح الآن</span></td>
-                </tr>
-                <tr>
-                    <td>#NEURO-02</td>
-                    <td>جراحة المخ والأعصاب</td>
-                    <td><span class="doc-name">د. عذاري القفاف</span></td>
-                    <td><span class="work-time">الأحد - الخميس (10:00 AM - 4:00 PM)</span></td>
-                    <td>العيادة B-205</td>
-                    <td><span class="badge">متاح الآن</span></td>
-                </tr>
-                <tr>
-                    <td>#PED-03</td>
-                    <td>طب الأطفال وحديثي الولادة</td>
-                    <td><span class="doc-name">د. خالد العمراني</span></td>
-                    <td><span class="work-time">طوال الأسبوع (8:00 AM - 8:00 PM)</span></td>
-                    <td>العيادة C-102</td>
-                    <td><span class="badge">متاح الآن</span></td>
-                </tr>
-                <tr>
-                    <td>#ORTHO-04</td>
-                    <td>جراحة العظام والمفاصل</td>
-                    <td><span class="doc-name">د. محمد الشرفي</span></td>
-                    <td><span class="work-time">السبت - الخميس (4:00 PM - 9:00 PM)</span></td>
-                    <td>العيادة D-301</td>
-                    <td><span class="badge">متاح الآن</span></td>
-                </tr>
-            </tbody>
-        </table>
+       
+        <!-- Table with Glassmorphism & Modern Styling -->
+        <div class="glass-card" style="padding: 20px; overflow-x: auto; margin-bottom: 50px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: right;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #e2e8f0; color: var(--navy-dark);">
+                        <th style="padding: 16px;">الصورة</th>
+                        <th style="padding: 16px;">رمز التخصص</th>
+                        <th style="padding: 16px;">اسم التخصص</th>
+                        <th style="padding: 16px;">الطبيب الاستشاري المسؤول</th>
+                        <th style="padding: 16px;">أيام وساعات الدوام</th>
+                        <th style="padding: 16px;">موقع العيادة</th>
+                        <th style="padding: 16px;">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <!-- مكان مخصص لصورة الطبيب/القسم -->
+                        <td style="padding: 16px;">
+                            <div style="width: 45px; height: 45px; background: #e0f2fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🫀</div>
+                            <!-- لاستخدام صورة حقيقية لاحقاً: <img src="{% static 'images/cardio.jpg' %}" alt="أمراض القلب" style="width:45px; height:45px; border-radius:50%; object-fit:cover;"> -->
+                        </td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--primary);">#CARDIO-01</td>
+                        <td style="padding: 16px; font-weight: 700;">أمراض القلب والأوعية</td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--navy-dark);">د. عصام القفاف</td>
+                        <td style="padding: 16px; color: #475569;">السبت - الأربعاء (9:00 AM - 2:00 PM)</td>
+                        <td style="padding: 16px; font-weight: 600;">العيادة A-101</td>
+                        <td style="padding: 16px;"><span class="badge-status badge-open" style="margin: 0; padding: 4px 12px; font-size: 0.8rem;">متاح الآن</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 16px;">
+                            <div style="width: 45px; height: 45px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🧠</div>
+                        </td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--primary);">#NEURO-02</td>
+                        <td style="padding: 16px; font-weight: 700;">جراحة المخ والأعصاب</td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--navy-dark);">د. عذاري القفاف</td>
+                        <td style="padding: 16px; color: #475569;">الأحد - الخميس (10:00 AM - 4:00 PM)</td>
+                        <td style="padding: 16px; font-weight: 600;">العيادة B-205</td>
+                        <td style="padding: 16px;"><span class="badge-status badge-open" style="margin: 0; padding: 4px 12px; font-size: 0.8rem;">متاح الآن</span></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 16px;">
+                            <div style="width: 45px; height: 45px; background: #fef9c3; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">👶</div>
+                        </td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--primary);">#PED-03</td>
+                        <td style="padding: 16px; font-weight: 700;">طب الأطفال وحديثي الولادة</td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--navy-dark);">د. خالد العمراني</td>
+                        <td style="padding: 16px; color: #475569;">طوال الأسبوع (8:00 AM - 8:00 PM)</td>
+                        <td style="padding: 16px; font-weight: 600;">العيادة C-102</td>
+                        <td style="padding: 16px;"><span class="badge-status badge-open" style="margin: 0; padding: 4px 12px; font-size: 0.8rem;">متاح الآن</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px;">
+                            <div style="width: 45px; height: 45px; background: #f3e8ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">🦴</div>
+                        </td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--primary);">#ORTHO-04</td>
+                        <td style="padding: 16px; font-weight: 700;">جراحة العظام والمفاصل</td>
+                        <td style="padding: 16px; font-weight: 700; color: var(--navy-dark);">د. محمد الشرفي</td>
+                        <td style="padding: 16px; color: #475569;">السبت - الخميس (4:00 PM - 9:00 PM)</td>
+                        <td style="padding: 16px; font-weight: 600;">العيادة D-301</td>
+                        <td style="padding: 16px;"><span class="badge-status badge-open" style="margin: 0; padding: 4px 12px; font-size: 0.8rem;">متاح الآن</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
+    <!-- Footer -->
     <footer>
-        حقوق النشر © 2026 - مشروع هندسة البرمجيات | تم التطوير بنجاح
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>عن {{ hospital_name|title }}</h4>
+                <p>منظومة طبية متكاملة لتقديم أفضل الخدمات الصحية والإستشارات.</p>
+            </div>
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="{% url 'doctors:home' %}">الرئيسية</a></li>
+                    <li><a href="{% url 'doctors:about' %}">التخصصات والمواعيد</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <p>📍 صنعاء - اليمن<br>
+                📞 الهاتف: +967 770 000 000</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            حقوق النشر © 2026 - {{ hospital_name|lower }} | تم التطوير بنجاح
+        </div>
     </footer>
 
+    <!-- Back to top Floating Button -->
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</button>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        });
+
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
