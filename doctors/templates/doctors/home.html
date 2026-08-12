@@ -41,20 +41,25 @@
     </div>
 </section>
 
-        <!-- شريط البحث الملون -->
-        <form method="GET" action="{% url 'doctors:home' %}" class="search-box-colored">
-            <input type="text" name="q" placeholder="ابحث عن الطبيب أو التخصص..." value="{{ request.GET.q }}">
+               <!-- شريط البحث الملون -->
+        <form method="GET" action="{% url 'doctors:home' %}" class="search-box">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="اكتب available أو busy...">
             <button type="submit">بحث سريع 🔍</button>
         </form>
+
+        <!-- نتيجة الفلتر المخصص -->
+        {% if search_query %}
+            <div style="background: #1e293b; color: white; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: center;">
+                <p style="font-weight: bold; color: #00bcd4; font-size: 18px;">
+                    نتيجة الفلتر المخصص: {{ search_query|doctor_status }}
+                </p>
+            </div>
+        {% endif %}
 
         <!-- قسم الأطباء -->
         <div class="section-title-box">
             <h2>👨‍⚕️ نخبة <span style="color: var(--accent-gold);">الأطباء والاستشاريين</span></h2>
         </div>
-<div style="background: #1e293b; color: white; padding: 15px; border-radius: 10px; margin: 15px 0;">
-    <p>قبل التحويل: {{ status_text }}</p>
-    <p>بعد التحويل بالفلتر: {{ status_text|doctor_status }}</p>
-</div>
         <div class="doctors-grid">
     {% for doctor in doctors %}
         <div class="doctor-card-colored">

@@ -3,13 +3,19 @@ from django import template
 register = template.Library()
 
 @register.filter(name='doctor_status')
-def doctor_status(value):
-    """فلتر يحول حالة الطبيب إلى نص عربي مع إيموجي"""
-    val = str(value).lower().strip()
+def translate_status(value):
+    """
+    ياخذ الكلمة الانجليزية المدخلة من شريط البحث
+    ويحولها إلى نص عربي مزين بالإيموجي
+    """
+    if not value:
+        return ""
    
-    if val in ['available', 'متاح', 'true']:
-        return "🟢 متاح للاستشارة"
-    elif val in ['busy', 'مشغول']:
-        return "🔴 غير متاح حالياً"
+    clean_val = str(value).strip().lower()
+
+    if clean_val == 'د.عذاري عصام':
+        return "متاح للاستشارة 🟢"
+    elif clean_val == 'د.خالد العمراني':
+        return "غير متاح حالياً 🔴"
     else:
-        return f"🩺 الحالة: {value}"
+        return f"حالة غير معروفة: {value}"

@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+
 @login_required(login_url='login')
 def home(request):
-    # 1. المتغيرات المحلية (Local Variables)
+    search_query = request.GET.get('q', '')
+
     hospital_name = "Care Medical"
     lab_number = 3
     instructor = "Eng. Rim Taher"
     clinic_open = True
-    description = None  # مخصص لاختبار فلتر default
+    description = None
 
-    # قائمة الأطباء الحقيقية من واجهة تطبيقكِ مع كامل التفاصيل
     doctors_list = [
         {
             "id": 1,
@@ -44,12 +45,11 @@ def home(request):
             "experience_years": 15,
             "age": 50,
             "degree": "دكتوراة أمراض وجراحة القلب والأوعية الدموية",
-            "schedule": "السبت - الخميس (4 PM - 9 PM)",
+            "schedule": "الخميس - السبت (4 PM - 9 PM)",
             "available": False,
         },
     ]
 
-    # الطبيب الرئيسي
     main_doctor = doctors_list[0]
 
     context = {
@@ -60,15 +60,17 @@ def home(request):
         "description": description,
         "doctors": doctors_list,
         "main_doctor": main_doctor,
-        "status_text":"available",
+        "status_text": "available",
+        "search_query": search_query,
     }
     return render(request, "doctors/home.html", context)
+
 
 def about(request):
     return render(request, "doctors/about.html")
 
+
 def detail(request, doctor_id):
-    # بيانات التفاصيل لكل طبيب
     doctors_list = [
         {
             "id": 1,
@@ -102,12 +104,12 @@ def detail(request, doctor_id):
             "experience_years": 15,
             "age": 50,
             "degree": "دكتوراة أمراض وجراحة القلب والأوعية الدموية",
-            "schedule": "السبت - الخميس (4 PM - 9 PM)",
+            "schedule": "الخميس - السبت (4 PM - 9 PM)",
             "available": False,
             "location": "مركز القلب - الدور الأول",
         },
     ]
-   
+
     selected_doctor = None
     for doc in doctors_list:
         if doc["id"] == doctor_id:
@@ -116,6 +118,6 @@ def detail(request, doctor_id):
 
     context = {
         "doctor": selected_doctor,
-        "doctor_id": doctor_id
+        "doctor_id": doctor_id,
     }
     return render(request, "doctors/detail.html", context)
