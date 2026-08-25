@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #101827; color: white; padding: 30px; }
+        .form-box { max-width: 800px; margin: auto; background: #1e293b; padding: 30px; border-radius: 15px; }
+        h1 { color: #f5c542; }
+        form p { margin: 15px 0; }
+        label { display: block; margin-bottom: 6px; color: #f5c542; }
+        input, select, textarea { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #64748b; box-sizing: border-box; }
+        select[multiple] { min-height: 120px; }
+        .errorlist { color: #ff8080; }
+        button, a { display: inline-block; margin-top: 20px; padding: 12px 22px; border: 0; border-radius: 8px; text-decoration: none; cursor: pointer; }
+        button { background: #13c8d4; color: #07111f; }
+        a { background: #64748b; color: white; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>{{ title }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">حفظ الطبيب</button>
+            <a href="{% url 'doctors:home' %}">العودة للأطباء</a>
+        </form>
+    </div>
+</body>
+</html>

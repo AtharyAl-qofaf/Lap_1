@@ -60,6 +60,12 @@
         <div class="section-title-box">
             <h2>👨‍⚕️ نخبة <span style="color: var(--accent-gold);">الأطباء والاستشاريين</span></h2>
         </div>
+        <div style="text-align: center; margin: 20px 0;">
+    <a href="{% url 'doctors:doctor_create' %}"
+       style="background: #13d450; color: #07111f; padding: 12px 24px; border-radius: 8px; text-decoration: none; display: inline-block;">
+        إضافة طبيب جديد
+    </a>
+</div>
         <div class="doctors-grid">
     {% for doctor in doctors %}
         <div class="doctor-card-colored">
@@ -69,7 +75,7 @@
                     <img src="{% static 'doctors/image/kk.png' %}" alt="{{ doctor.name }}">
                 {% elif "عذاري" in doctor.name %}
                     <img src="{% static 'doctors/image/aa.jpg' %}" alt="{{ doctor.name }}">
-                {% elif "القفاف" in doctor.name %}
+                {% elif "احمد" in doctor.name %}
                     <img src="{% static 'doctors/image/xx.jpg' %}" alt="{{ doctor.name }}">
                
                 <!-- إذا كان هناك طبيب آخر، تظهر صورته المرفوعة من الأدمن أو الصورة الافتراضية -->
@@ -86,6 +92,14 @@
             <p style="font-size: 0.9rem; color: #cbd5e1;">🕒 الموعد: {{ doctor.schedule|default:"غير محدد" }}</p>
             <p style="margin-top: 8px; font-weight: bold; color: #f59e0b;">⭐ التقييم: {{ doctor.rating }} / 5.0</p>
             <a href="{% url 'doctors:detail' doctor.id %}" style="display: inline-block; margin-top: 12px; background: var(--accent-cyan); color: #0f172a; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold;">عرض التفاصيل</a>
+       <a href="{% url 'doctors:doctor_update' doctor.id %}"
+   style="background: #f5c542; color: #07111f; padding: 10px 18px; border-radius: 8px; text-decoration: none; display: inline-block; margin-right: 8px;">
+    تعديل
+</a>
+<a href="{% url 'doctors:doctor_delete' doctor.id %}"
+   style="background: #dc3545; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; display: inline-block; margin-right: 8px;">
+    حذف
+</a>
         </div>
     {% empty %}
         <p style="text-align: center; grid-column: 1/-1;">لا يوجد أطباء متاحون حالياً.</p>
@@ -163,7 +177,7 @@
 
         <!-- الفلاتر المطلوبة للتكليف مخفية برمجيًا لعدم التأثير على التصميم -->
         <div style="display: none;">
-            {{ doctors|length }} | {{ doctors|first }} | {{ doctors|last }} | {{ hospital_name|default:"Care Medical"|upper|slugify }} | {{ doctors|slice:":2" }}
+            {{ doctors|length }} | {{ doctors|first }}  | {{ hospital_name|default:"Care Medical"|upper|slugify }} | {{ doctors|slice:":2" }}
         </div>
     </div>
 
