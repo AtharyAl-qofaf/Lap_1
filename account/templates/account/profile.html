@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الملف الشخصي وتعديل البيانات</title>
+    <style>
+        body { font-family: sans-serif; background-color: #0f172a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .profile-card { background: #1e293b; padding: 30px; border-radius: 12px; text-align: center; width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .profile-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #38bdf8; margin-bottom: 15px; }
+        h2 { margin: 10px 0 5px; color: #38bdf8; }
+        p { color: #cbd5e1; font-size: 15px; margin: 8px 0; }
+        hr { border: 0; height: 1px; background: #334155; margin: 20px 0; }
+        .form-group { text-align: right; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #94a3b8; font-size: 14px; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; box-sizing: border-box; }
+        .btn { background-color: #38bdf8; color: #0f172a; font-weight: bold; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn:hover { background-color: #0284c7; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        {% if profile.image %}
+            <img src="{{ profile.image.url }}" alt="Profile Image" class="profile-img">
+        {% else %}
+            <img src="https://ui-avatars.com/api/?name={{ profile.user.username }}&background=38bdf8&color=fff&size=120" alt="Default Avatar" class="profile-img">
+        {% endif %}
+       
+        <h2>{{ profile.user.username }}</h2>
+        <p><strong>البريد الإلكتروني:</strong> {{ profile.user.email }}</p>
+        <p><strong>رقم الهاتف الحالي:</strong> {{ profile.phone|default:"غير مدخل" }}</p>
+
+        <hr>
+
+        <h3>تحديث البيانات</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_phone">رقم الهاتف الجديد:</label>
+                {{ form.phone }}
+            </div>
+            <div class="form-group">
+                <label for="id_image">الصورة الشخصية:</label>
+                {{ form.image }}
+            </div>
+            <button type="submit" class="btn">حفظ التغييرات</button>
+        </form>
+        <a href="{% url 'logout' %}" style="display: inline-block; margin-top: 15px; color: #ef4444; text-decoration: none; font-size: 14px;">تسجيل الخروج</a>
+    </div>
+</body>
+</html>
